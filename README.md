@@ -1,0 +1,1 @@
+PADC_MMNews_Akkt
