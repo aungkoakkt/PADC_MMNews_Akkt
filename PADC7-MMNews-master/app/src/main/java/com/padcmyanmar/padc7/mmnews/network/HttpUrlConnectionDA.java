@@ -170,10 +170,10 @@ public class HttpUrlConnectionDA implements NewsDataAgent {
                 if (newsResponse.isResponseSuccess()) {
                     newsResponseDelegate.onSuccess(newsResponse.getNewsList());
                 } else {
-                    newsResponseDelegate.onFail(newsResponse.getMessage());
+                    newsResponseDelegate.onFail(newsResponse.getMessage(),newsResponse.getCode());
                 }
             } else {
-                newsResponseDelegate.onFail("Response is null.");
+                newsResponseDelegate.onFail("Response is null.",newsResponse.getCode());
             }
 
         }

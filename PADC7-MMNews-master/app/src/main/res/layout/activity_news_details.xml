@@ -20,7 +20,7 @@
             app:title="News Details">
 
             <androidx.viewpager.widget.ViewPager
-                android:id="@+id/vp_news_details_images"
+                android:id="@+id/vpNewsDetailsImages"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/news_details_appbar_height"
                 android:fitsSystemWindows="true"
@@ -32,7 +32,7 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/iv_publication_logo"
+                    android:id="@+id/ivPublicationLogo"
                     android:layout_width="@dimen/logo_size"
                     android:layout_height="@dimen/logo_size"
                     android:layout_alignParentBottom="true"
@@ -41,13 +41,13 @@
                     android:src="@drawable/dummy_publication_logo" />
 
                 <TextView
-                    android:id="@+id/tv_publication_name"
+                    android:id="@+id/tvPublicationName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@id/iv_publication_logo"
+                    android:layout_alignTop="@id/ivPublicationLogo"
                     android:layout_marginLeft="@dimen/margin_medium_2"
                     android:layout_marginTop="@dimen/margin_medium"
-                    android:layout_toRightOf="@id/iv_publication_logo"
+                    android:layout_toRightOf="@id/ivPublicationLogo"
                     android:shadowColor="@color/black_full"
                     android:shadowDx="2"
                     android:shadowDy="2"
@@ -57,11 +57,11 @@
                     android:textSize="@dimen/text_regular_3x" />
 
                 <TextView
-                    android:id="@+id/tv_published_date"
+                    android:id="@+id/tvPublishedDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_publication_name"
-                    android:layout_alignLeft="@id/tv_publication_name"
+                    android:layout_below="@id/tvPublicationName"
+                    android:layout_alignLeft="@id/tvPublicationName"
                     android:layout_marginTop="@dimen/margin_small"
                     android:shadowColor="@color/black_full"
                     android:shadowDx="2"
@@ -74,7 +74,7 @@
             </RelativeLayout>
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_detail"
+                android:id="@+id/toolbarDetail"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize" />
 
@@ -93,7 +93,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tv_news_details"
+                android:id="@+id/tvNewsDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_medium_2"

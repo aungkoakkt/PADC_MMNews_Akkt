@@ -42,7 +42,7 @@ public class LoginActivity extends BaseActivity {
         toolbar=findViewById(R.id.toolbar_login);
         etEmailOrPhone=findViewById(R.id.et_email_or_phone);
         etPassword=findViewById(R.id.et_password);
-        mUserModel = UserModelImpl.getInstance();
+        mUserModel = UserModelImpl.INSTANCE;
 
         setSupportActionBar(toolbar);
     }
@@ -59,7 +59,7 @@ public class LoginActivity extends BaseActivity {
             }
 
             @Override
-            public void onFail(String msg) {
+            public void onFail(String msg,int code) {
                 Snackbar.make(toolbar, msg, Snackbar.LENGTH_INDEFINITE).show();
             }
         });

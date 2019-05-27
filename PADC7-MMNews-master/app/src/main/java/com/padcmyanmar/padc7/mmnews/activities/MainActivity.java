@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -28,8 +29,11 @@ import com.padcmyanmar.padc7.mmnews.data.vos.NewsVO;
 import com.padcmyanmar.padc7.mmnews.mvp.presenters.INewsListPresenter;
 import com.padcmyanmar.padc7.mmnews.mvp.presenters.NewsListPresenter;
 import com.padcmyanmar.padc7.mmnews.mvp.views.NewsListView;
+import com.padcmyanmar.padc7.mmnews.utils.Constants;
 import com.padcmyanmar.padc7.mmnews.views.pods.EmptyViewPod;
 import com.padcmyanmar.padc7.mmnews.views.pods.LoginUserViewPod;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -78,12 +82,12 @@ public class MainActivity extends BaseActivity implements NewsListView {
         setSupportActionBar(mToolbar);
         vpLoginUser = (LoginUserViewPod) mNavigationView.getHeaderView(0);
 
+        mPresenter= ViewModelProviders.of(this).get(NewsListPresenter.class);
+        ((NewsListPresenter) mPresenter).initPresenter(this);
+        mPresenter.onUIReady(this);
+
         mNewsAdapter = new NewsAdapter(mPresenter);
         rvNews.setAdapter(mNewsAdapter);
-
-        mPresenter=new NewsListPresenter(this);
-        mPresenter.onCreate();
-        mPresenter.onUIReady();
 
         mNavigationView = findViewById(R.id.navigation_view);
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -122,7 +126,7 @@ public class MainActivity extends BaseActivity implements NewsListView {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.onRefreshPage();
+                mPresenter.onRefreshPage(MainActivity.this);
             }
         });
 
@@ -130,7 +134,8 @@ public class MainActivity extends BaseActivity implements NewsListView {
             @Override
             public void onListEndReach() {
                 Toast.makeText(getApplicationContext(), "onListEndReach", Toast.LENGTH_LONG).show();
-                mPresenter.onListEndReach();
+                mPresenter.onListEndReach(MainActivity.this
+                );
             }
         });
 
@@ -197,14 +202,12 @@ public class MainActivity extends BaseActivity implements NewsListView {
     }
 
     @Override
-    public void displayMoreNewsList(List<? extends NewsVO> newsList) {
-        if (newsList!=null){
-            mNewsAdapter.setNewData((List<NewsVO>) newsList);
-        }
+    public void displayMoreNewsList(@NotNull List<? extends NewsVO> newsList) {
+        mNewsAdapter.setNewData((List<NewsVO>) newsList);
     }
 
     @Override
-    public void displayFailToLoadData(String message) {
+    public void displayFailToLoadData(@NotNull String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
@@ -214,13 +217,14 @@ public class MainActivity extends BaseActivity implements NewsListView {
     }
 
     @Override
-    public void displayNewsDetailScreen() {
-        Intent intent = NewsDetailsActivity.newIntent(getApplicationContext());
+    public void displayNewsDetailScreen(@NotNull String newsId) {
+        Intent intent = NewsDetailsActivity.Companion.newIntent(getApplicationContext());
+        intent.putExtra(Constants.NEWS_ID,newsId);
         startActivity(intent);
     }
 
     @Override
-    public void displayUserInformation(LoginUserVO loginUser) {
+    public void displayUserInformation(@NotNull LoginUserVO loginUser) {
         vpLoginUser.setData(loginUser);
     }
 }

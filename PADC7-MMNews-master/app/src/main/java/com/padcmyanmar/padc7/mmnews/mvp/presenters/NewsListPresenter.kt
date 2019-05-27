@@ -1,71 +1,71 @@
 package com.padcmyanmar.padc7.mmnews.mvp.presenters
 
+import androidx.lifecycle.Observer
+import com.padcmyanmar.padc7.mmnews.activities.BaseActivity
 import com.padcmyanmar.padc7.mmnews.mvp.views.NewsListView
 
 
 /**
  *Created by Aung Ko Ko Thet on 5/4/19
  */
-class NewsListPresenter(private val mNewsListView: NewsListView) : BasePresenter(), INewsListPresenter {
+class NewsListPresenter : BasePresenter<NewsListView>(), INewsListPresenter {
 
-    override fun onTapNewsItem() {
-        mNewsListView.displayNewsDetailScreen()
+    override fun onTapNewsItem(newsId: String) {
+        mView.displayNewsDetailScreen(newsId)
     }
 
     override fun onTapLogout() {
         mUserModel.onUserLogout()
-        mNewsListView.displayScreenIfUserIsNotLogin()
+        mView.displayScreenIfUserIsNotLogin()
     }
 
-    override fun onUIReady() {
+    override fun onUIReady(activity: BaseActivity) {
 
-        when{
-            mUserModel.isUserLogin->{
-                mNewsListView.displayUserInformation(mUserModel.loginUser)
+        when {
+            mUserModel.isUserLogin() -> {
 
-                mNewsModel.getNews(false).observeForever {
-                    if (it.isEmpty()){
-                        mNewsListView.displayFailToLoadData("No data to display")
-                    }else{
-                        mNewsListView.displayNewsList(it)
-                    }
-                }
+                mView.displayUserInformation(mUserModel.getLoginUser())
 
+                mNewsModel.getNews(false) { message, _ ->
+
+                    mView.displayFailToLoadData(message)
+
+                }.observe(activity, Observer {
+
+                    mView.displayNewsList(it)
+
+                })
             }
-            else->mNewsListView.displayScreenIfUserIsNotLogin()
+
+            else -> mView.displayScreenIfUserIsNotLogin()
         }
     }
 
-    override fun onRefreshPage() {
+    override fun onRefreshPage(activity: BaseActivity) {
 
+        mNewsModel.getNews(true) { message, _ ->
 
-        mNewsModel.getNews(true).observeForever {
-            if (it.isEmpty()){
-                mNewsListView.displayFailToLoadData("No data to display")
-            }else{
-                mNewsListView.displayNewsList(it)
-            }
-        }
+            mView.displayFailToLoadData(message)
 
+        }.observe(activity, Observer {
+
+            mView.displayNewsList(it)
+
+        })
     }
 
-    override fun onListEndReach() {
+    override fun onListEndReach(activity: BaseActivity) {
 
-        mNewsModel.loadMoreNews().observeForever{
-            if (it.isEmpty()){
-                mNewsListView.displayFailToLoadData("No data to display")
-            }else{
-                mNewsListView.displayMoreNewsList(it)
-            }
-        }
+        mNewsModel.loadMoreNews {
+
+            message, _ ->
+
+            mView.displayFailToLoadData(message)
+
+        }.observe(activity, Observer {
+
+            mView.displayMoreNewsList(it)
+
+        })
     }
-
-    override fun onStart() {
-
-    }
-
-    override fun onStop() {
-
-    }
-
 }

@@ -15,30 +15,30 @@
         android:background="@color/white_full">
 
         <ImageView
-            android:id="@+id/iv_publication_logo"
+            android:id="@+id/ivPublicationLogo"
             android:layout_width="@dimen/logo_size"
             android:layout_height="@dimen/logo_size"
             android:layout_margin="@dimen/margin_card_medium_2"
             android:src="@drawable/dummy_publication_logo" />
 
         <org.mmtextview.components.MMTextView
-            android:id="@+id/tv_publication_name"
+            android:id="@+id/tvPublicationName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/iv_publication_logo"
+            android:layout_alignTop="@id/ivPublicationLogo"
             android:layout_marginTop="@dimen/margin_medium"
-            android:layout_toRightOf="@id/iv_publication_logo"
+            android:layout_toRightOf="@id/ivPublicationLogo"
             android:text="Eleven Media"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/text_regular_2x"
             />
 
         <org.mmtextview.components.MMTextView
-            android:id="@+id/tv_published_date"
+            android:id="@+id/tvPublishedDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/tv_publication_name"
-            android:layout_below="@id/tv_publication_name"
+            android:layout_alignLeft="@id/tvPublicationName"
+            android:layout_below="@id/tvPublicationName"
             android:layout_marginTop="@dimen/margin_small"
             android:text="Posted At : Feb 03 2019 - 6:30AM"
             android:textColor="@color/secondary_text"
@@ -60,7 +60,7 @@
             android:id="@+id/tv_brief_news"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/iv_publication_logo"
+            android:layout_below="@id/ivPublicationLogo"
             android:layout_marginLeft="@dimen/margin_medium"
             android:layout_marginRight="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_medium_n"
